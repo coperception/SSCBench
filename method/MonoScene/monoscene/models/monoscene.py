@@ -11,6 +11,8 @@ import numpy as np
 import torch.nn.functional as F
 from monoscene.models.unet2d import UNet2D
 from torch.optim.lr_scheduler import MultiStepLR
+import ipdb
+import json
 
 
 class MonoScene(pl.LightningModule):
@@ -115,8 +117,13 @@ class MonoScene(pl.LightningModule):
         self.val_metrics = SSCMetrics(self.n_classes)
         self.test_metrics = SSCMetrics(self.n_classes)
 
+    def save_results_and_target(self, pred, target, batch):
+        path = "/data4/sas20048/SSCBench/results/" + self.dataset + "/0/" + batch['sequence'][0] + "_" + batch['frame_id'][0] + ".npz"
+        # json_object = {'pred': pred.tolist(), 'target': target.tolist()}
+        with open(path, 'wb') as outfile:
+            np.savez(outfile, x=pred, y=target)
+    
     def forward(self, batch):
-
         img = batch["img"]
         bs = len(img)
 
@@ -152,9 +159,9 @@ class MonoScene(pl.LightningModule):
         input_dict = {
             "x3d": torch.stack(x3ds),
         }
-
+        
         out = self.net_3d_decoder(input_dict)
-
+        
         return out
 
     def step(self, batch, step_type, metric):
@@ -263,6 +270,7 @@ class MonoScene(pl.LightningModule):
 
         y_true = target.cpu().numpy()
         y_pred = ssc_pred.detach().cpu().numpy()
+        self.save_results_and_target(y_pred, y_true, batch)
         y_pred = np.argmax(y_pred, axis=1)
         metric.add_batch(y_pred, y_true)
 

@@ -17,7 +17,7 @@ import torch
 hydra.output_subdir = None
 
 
-@hydra.main(config_name="../config/monoscene.yaml")
+@hydra.main(config_name="../config/monoscene-kitti-360.yaml")
 def main(config: DictConfig):
     exp_name = config.exp_prefix
     exp_name += "_{}_{}".format(config.dataset, config.run)

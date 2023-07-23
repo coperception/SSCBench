@@ -1,11 +1,11 @@
 #dataset: "NYU" # "kitti", "kitti_360"
-dataset: nuscenes
+dataset: kitti_360
 
 n_relations: 4
 
-enable_log: false
-kitti_root: '/data4/sas20048/SSCBench/SemanticKITTI'
-kitti_preprocess_root: '/data4/sas20048/SSCBench/SemanticKITTI'
+enable_log: true
+kitti_root: '/data4/sas20048/SSCBench/KITTI360'
+kitti_preprocess_root: '/data4/sas20048/SSCBench/KITTI360/preprocess'
 kitti_logdir: '/data4/sas20048/SSCBench/results/kitti'
 
 kitti_360_root: '/data4/sas20048/SSCBench/KITTI360'
@@ -28,7 +28,7 @@ output_path:  '/data4/sas20048/SSCBench/results/monoscene'
 
 fp_loss: true 
 frustum_size: 8 
-batch_size: 4
+batch_size: 8
 n_gpus: 4
 num_workers_per_gpu: 1
 exp_prefix: "exp"
@@ -36,7 +36,7 @@ run: 1
 lr: 1e-4
 weight_decay: 1e-4 
 
-context_prior: false
+context_prior: true
 
 relation_loss: true 
 CE_ssc_loss: true

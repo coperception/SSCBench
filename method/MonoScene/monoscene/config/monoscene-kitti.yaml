@@ -1,5 +1,5 @@
 #dataset: "NYU" # "kitti", "kitti_360"
-dataset: nuscenes
+dataset: kitti
 
 n_relations: 4
 

@@ -43,7 +43,8 @@ def majority_pooling(grid, k_size=2):
 @hydra.main(config_name="../../config/monoscene.yaml")
 def main(config: DictConfig):
     scene_size = (256, 256, 32)
-    sequences = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10"]
+    # sequences = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21"]
+    sequences = ["11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21"]
     remap_lut = SemanticKittiIO.get_remap_lut(
         os.path.join(
             get_original_cwd(),
@@ -55,6 +56,7 @@ def main(config: DictConfig):
     )
 
     for sequence in sequences:
+        print(sequence)
         sequence_path = os.path.join(
             config.kitti_root, "dataset", "sequences", sequence
         )
